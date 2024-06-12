@@ -7,7 +7,7 @@
 }
 
 html, body {
-    height: 100vh;
+    height: 75vh;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -104,7 +104,7 @@ button {
 
 #message {
     position: absolute;
-    bottom: 120px;
+    bottom: 24vh;
     display: flex;
     flex-direction: column;
     text-align: center;
