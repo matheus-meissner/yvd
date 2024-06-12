@@ -9,5 +9,6 @@ document.getElementById('download-form').addEventListener('submit', async functi
         body: JSON.stringify({ url: url })
     });
     const data = await response.json();
-    document.getElementById('message').innerText = data.message;
+    const message = document.getElementById('message');
+    message.innerHTML = data.message;
 });

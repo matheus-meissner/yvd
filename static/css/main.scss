@@ -104,7 +104,7 @@ button {
 
 #message {
     position: absolute;
-    bottom: 170px;
+    bottom: 120px;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -114,10 +114,6 @@ button {
     width: 30em;
     color: $bege;
     transition: 1s;
-
-    &:hover {
-        color: $ciano;
-    }
 }
 
 .txt_vermelho {
@@ -126,6 +122,10 @@ button {
 
 .txt_laranja {
     color: $laranja;
+}
+
+.txt_ciano {
+    color: $ciano;
 }
 
 .main-wrapper {

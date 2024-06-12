@@ -96,7 +96,7 @@ button:hover {
 
 #message {
   position: absolute;
-  bottom: 170px;
+  bottom: 120px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -107,9 +107,6 @@ button:hover {
   color: #E7D4A7;
   transition: 1s;
 }
-#message:hover {
-  color: #3D8587;
-}
 
 .txt_vermelho {
   color: #C23127;
@@ -117,6 +114,10 @@ button:hover {
 
 .txt_laranja {
   color: #D3593A;
+}
+
+.txt_ciano {
+  color: #3D8587;
 }
 
 .main-wrapper {
