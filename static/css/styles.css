@@ -6,7 +6,7 @@
 }
 
 html, body {
-  height: 75vh;
+  height: 95vh;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -38,7 +38,6 @@ h1:hover {
 .container {
   position: relative;
   width: 30em;
-  height: 30em;
   text-align: center;
   padding: 50px;
   border: 5px solid #E7D4A7;
@@ -61,7 +60,7 @@ input {
   border: 1px solid #E7D4A7;
   border-radius: 16px;
   color: black;
-  margin-bottom: 3em;
+  margin-bottom: 4px;
   font-family: "Notable", sans-serif;
   font-weight: 100;
   font-size: small;
@@ -75,7 +74,16 @@ input::placeholder {
   color: #091C3F;
 }
 
+#thumbnail {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #E7D4A7;
+  border-radius: 16px;
+  margin-top: 10px;
+}
+
 button {
+  margin-top: 22px;
   padding: 10px 20px;
   border: 5px solid #E7D4A7;
   border-radius: 16px;
@@ -96,7 +104,7 @@ button:hover {
 
 #message {
   position: absolute;
-  bottom: 24vh;
+  bottom: 35vh;
   display: flex;
   flex-direction: column;
   text-align: center;

@@ -12,3 +12,20 @@ document.getElementById('download-form').addEventListener('submit', async functi
     const message = document.getElementById('message');
     message.innerHTML = data.message;
 });
+
+document.getElementById('url').addEventListener('input', async function () {
+    const url = this.value;
+    if (url) {
+        const response = await fetch('/get_thumbnail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ url: url })
+        });
+        const data = await response.json();
+        const thumbnail = document.getElementById('thumbnail');
+        thumbnail.src = data.thumbnail_url;
+        thumbnail.style.display = 'block';
+    }
+});
