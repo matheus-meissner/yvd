@@ -1,0 +1,136 @@
+@import 'variaveis';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: $fontePadrao;
+}
+
+body {
+    background-color: $corFundo; /* Apenas para visualização */
+}
+
+h1 {
+    color: $bege;
+    font-size: medium;
+    font-weight: 400;
+    margin-top: 1em;
+    margin-bottom: 4px;
+    transition: 1s;
+
+    &:hover {
+        color: $ciano;
+    }
+}
+
+#logo {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    position: relative;
+    width: 30em;
+    height: 30em;
+    text-align: center;
+    padding: 50px;
+    border: 5px solid $bege;
+    border-radius: 16px;
+    // box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+
+    &:hover {
+        border: 5px solid $ciano;
+        // transform: scale(1.1);
+    }
+}
+
+input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: $bege;
+    border: 1px solid $bege;
+    border-radius: 16px;
+    color: $corFundo;
+    margin-bottom: 3em;
+    font-family: $fontePadrao;
+    font-weight: 100;
+    font-size: small;
+    color: $azulEscuro;
+    transition: 1s;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::placeholder {
+        color: $azulEscuro;
+    }
+}
+
+button {
+    padding: 10px 20px;
+    border: 5px solid $bege;
+    border-radius: 16px;
+    background-color: transparent;
+    color: $bege;
+    font-family: $fontePadrao;
+    font-weight: 400;
+    font-size: medium;
+    cursor: pointer;
+    transition: 1s;
+
+    &:hover {
+        background-color: $corFundo;
+        border-color: $vermelho;
+        color: $ciano;
+        transform: scale(1.1);
+    }
+}
+
+#message {
+    position: absolute;
+    bottom: 170px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 1.2em;
+    width: 30em;
+    color: $bege;
+    transition: 1s;
+
+    &:hover {
+        color: $ciano;
+    }
+}
+
+.txt_vermelho {
+    color: $vermelho;
+}
+
+.txt_laranja {
+    color: $laranja;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
