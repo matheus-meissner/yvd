@@ -7,7 +7,7 @@
 }
 
 html, body {
-    height: 95vh;
+    height: 88vh;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -51,6 +51,7 @@ h1 {
     justify-content: center;
     align-items: center;
     transition: 1s;
+    min-height: 30em; // Definindo a altura mínima com base no conteúdo esperado
 
     &:hover {
         border: 5px solid $ciano;
@@ -88,6 +89,7 @@ input {
     border: 1px solid $bege;
     border-radius: 16px;
     margin-top: 10px;
+    transition: all 1s ease-in-out;
 }
 
 button {
@@ -113,7 +115,7 @@ button {
 
 #message {
     position: absolute;
-    bottom: 35vh;
+    bottom: 6.5vh;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -122,7 +124,7 @@ button {
     font-size: 1.2em;
     width: 30em;
     color: $bege;
-    transition: 1s;
+    transition: all 1s ease-in-out;
 }
 
 .txt_vermelho {

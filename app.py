@@ -22,7 +22,7 @@ def download():
     if not os.path.exists(path):
         os.makedirs(path)
     title = download_video(url, path)
-    message = f'Video "<span class=\'txt_vermelho\'>{title}</span>" has been downloaded <span class=\'txt_laranja\'>successfully!</span>'
+    message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> has been downloaded <span class=\'txt_ciano\'>successfully!</span>'
     return jsonify({'message': message})
 
 @app.route('/get_thumbnail', methods=['POST'])
