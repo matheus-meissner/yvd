@@ -48,14 +48,23 @@ window.onload = function() {
 
     thumbnail.addEventListener('mouseover', function () {
         tooltip.style.display = 'block';
+        tooltip.style.opacity = 0;
+        tooltip.style.transition = 'opacity 1s';
+        setTimeout(function() {
+            tooltip.style.opacity = 1;
+        }, 10); // Pequeno delay para garantir a transição
     });
 
     thumbnail.addEventListener('mousemove', function (e) {
-        tooltip.style.left = e.pageX + 10 + 'px'; // Ajuste a posição horizontal
-        tooltip.style.top = e.pageY + 10 + 'px'; // Ajuste a posição vertical
+        tooltip.style.left = e.pageX + 10 + 'px';
+        tooltip.style.top = e.pageY + 10 + 'px';
     });
 
     thumbnail.addEventListener('mouseout', function () {
-        tooltip.style.display = 'none';
+        tooltip.style.opacity = 0;
+        tooltip.style.transition = 'opacity 1s';
+        setTimeout(function() {
+            tooltip.style.display = 'none';
+        }, 1000); // Tempo de espera para a transição completar antes de esconder a tooltip
     });
 }

@@ -175,10 +175,5 @@ button {
     font-size: 0.9em;
     pointer-events: none;
     z-index: 1000;
-    // transition: opacity 1s ease-in-out;
+    opacity: 0;
 }
-
-// .tooltip.show {
-//     opacity: 1;
-//     display: block;
-// }
