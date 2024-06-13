@@ -99,13 +99,10 @@ input {
     border: 5px solid $bege;
     border-radius: 16px;
     margin-top: 10px;
-    transition: all 1s ease-in-out;
-    box-shadow: -4px 7px 5px $corFundo; //horizontal, vertical, definicao, proximidade;
+    box-shadow: -4px 7px 5px $corFundo; //horizontal, vertical, definição, proximidade;
 
     &:hover {
-        border: 5px solid $bege;
         box-shadow: -1px 2px 1px 1px $corFundo; //horizontal, vertical,
-        // transform: scale(1.1);
         cursor: pointer;
     }
 }

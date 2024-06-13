@@ -30,12 +30,12 @@ window.onload = function() {
             thumbnail.style.opacity = 0; // Defina a opacidade inicial para 0
             thumbnail.style.display = 'block';
             thumbnail.setAttribute('data-url', url); // Defina o atributo data-url com a URL do vídeo
-            thumbnail.style.transition = 'opacity 1s'; // Adicione a transição de opacidade
+            thumbnail.style.transition = 'opacity 1s, box-shadow 1s'; // Adicione a transição de opacidade e box-shadow
             setTimeout(function() {
                 thumbnail.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
             }, 1000); // Pequeno delay para garantir a transição
         }
-    });
+    });        
 
     document.getElementById('thumbnail').addEventListener('click', function () {
         const videoUrl = this.getAttribute('data-url');
