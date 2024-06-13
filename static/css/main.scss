@@ -164,3 +164,21 @@ button {
     align-items: center;
     text-align: center;
 }
+
+.tooltip {
+    position: absolute;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: $bege;
+    padding: 5px 10px;
+    border-radius: 16px;
+    font-size: 0.9em;
+    pointer-events: none;
+    z-index: 1000;
+    // transition: opacity 1s ease-in-out;
+}
+
+// .tooltip.show {
+//     opacity: 1;
+//     display: block;
+// }
