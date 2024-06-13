@@ -16,6 +16,7 @@ window.onload = function() {
 
     document.getElementById('url').addEventListener('input', async function () {
         const url = this.value;
+        const thumbnail = document.getElementById('thumbnail');
         if (url) {
             const response = await fetch('/get_thumbnail', {
                 method: 'POST',
@@ -34,6 +35,11 @@ window.onload = function() {
             setTimeout(function() {
                 thumbnail.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
             }, 1000); // Pequeno delay para garantir a transição
+        } else {
+            thumbnail.style.opacity = 0; // Defina a opacidade para 0 para iniciar o fade out
+            setTimeout(function() {
+                thumbnail.style.display = 'none'; // Ocultar a thumbnail após a transição de opacidade
+            }, 1000); // Aguarde a duração da transição antes de ocultar
         }
     });        
 
