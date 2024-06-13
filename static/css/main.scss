@@ -86,10 +86,14 @@ input {
 #thumbnail {
     max-width: 100%;
     height: auto;
-    border: 1px solid $bege;
+    border: 5px solid $bege;
     border-radius: 16px;
     margin-top: 10px;
     transition: all 1s ease-in-out;
+
+    &:hover {
+        border: 5px solid $vermelho;
+    }
 }
 
 button {
