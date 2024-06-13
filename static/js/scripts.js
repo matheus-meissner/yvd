@@ -34,7 +34,7 @@ window.onload = function() {
             thumbnail.style.transition = 'opacity 1s, box-shadow 1s'; // Adicione a transição de opacidade e box-shadow
             setTimeout(function() {
                 thumbnail.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
-            }, 1000); // Pequeno delay para garantir a transição
+            }, 100); // Pequeno delay para garantir a transição
         } else {
             thumbnail.style.opacity = 0; // Defina a opacidade para 0 para iniciar o fade out
             setTimeout(function() {
