@@ -45,7 +45,7 @@ h1 {
 }
 
 .container {
-    margin-top: -12vh;
+    margin-top: -13vh;
     position: relative;
     width: 30em;
     text-align: center;
@@ -128,7 +128,7 @@ button {
 
 #message {
     position: absolute;
-    bottom: 6.5vh;
+    bottom: 4.7vh;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -137,7 +137,8 @@ button {
     font-size: 1.2em;
     width: 30em;
     color: $bege;
-    transition: all 1s ease-in-out;
+    transition: 1s;
+    filter: drop-shadow(-4px 7px 5px $corFundo); //horizontal, vertical, definicao;
 }
 
 .txt_vermelho {

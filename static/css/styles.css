@@ -41,7 +41,7 @@ h1:hover {
 }
 
 .container {
-  margin-top: -12vh;
+  margin-top: -13vh;
   position: relative;
   width: 30em;
   text-align: center;
@@ -118,7 +118,7 @@ button:hover {
 
 #message {
   position: absolute;
-  bottom: 6.5vh;
+  bottom: 4.7vh;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -127,7 +127,8 @@ button:hover {
   font-size: 1.2em;
   width: 30em;
   color: #E7D4A7;
-  transition: all 1s ease-in-out;
+  transition: 1s;
+  filter: drop-shadow(-4px 7px 5px black);
 }
 
 .txt_vermelho {
