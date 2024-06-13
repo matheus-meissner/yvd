@@ -45,13 +45,17 @@ window.onload = function() {
 
     const thumbnail = document.getElementById('thumbnail');
     const tooltip = document.getElementById('tooltip');
+    let tooltipVisible = false;
 
     thumbnail.addEventListener('mouseover', function () {
+        tooltipVisible = true;
         tooltip.style.display = 'block';
         tooltip.style.opacity = 0;
         tooltip.style.transition = 'opacity 1s';
         setTimeout(function() {
-            tooltip.style.opacity = 1;
+            if (tooltipVisible) {
+                tooltip.style.opacity = 1;
+            }
         }, 10); // Pequeno delay para garantir a transição
     });
 
@@ -61,10 +65,13 @@ window.onload = function() {
     });
 
     thumbnail.addEventListener('mouseout', function () {
+        tooltipVisible = false;
         tooltip.style.opacity = 0;
         tooltip.style.transition = 'opacity 1s';
         setTimeout(function() {
-            tooltip.style.display = 'none';
+            if (!tooltipVisible) {
+                tooltip.style.display = 'none';
+            }
         }, 1000); // Tempo de espera para a transição completar antes de esconder a tooltip
     });
 }
