@@ -29,3 +29,7 @@ document.getElementById('url').addEventListener('input', async function () {
         thumbnail.style.display = 'block';
     }
 });
+
+document.getElementById('logo').addEventListener('click', function () {
+    window.location.reload();
+});
