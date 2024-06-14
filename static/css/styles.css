@@ -164,6 +164,7 @@ button:hover {
   pointer-events: none;
   z-index: 1000;
   opacity: 0;
+  font-weight: 50;
 }
 
 /*# sourceMappingURL=styles.css.map */
