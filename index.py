@@ -1,5 +1,6 @@
 from pytube import YouTube
 import os
+import tempfile
 from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
@@ -20,23 +21,24 @@ def download():
     data = request.get_json()
     url = data['url']
 
-    # Determinar o caminho de downloads padrão do sistema operacional
-    home = os.path.expanduser("~")
-    if os.name == 'nt':  # Windows
-        download_path = os.path.join(home, 'Downloads')
-    else:  # macOS, Linux, etc.
-        download_path = os.path.join(home, 'Downloads')
+    # Use a temporary directory for downloads
+    with tempfile.TemporaryDirectory() as download_path:
+        title = download_video(url, download_path)
+        # Path to the downloaded video file
+        downloaded_file = os.path.join(download_path, os.listdir(download_path)[0])
 
-    # Certificar que o diretório de downloads existe
-    if not os.path.exists(download_path):
-        os.makedirs(download_path)
-    
+        with open(downloaded_file, 'rb') as file:
+            content = file.read()
 
-    # Supondo que você tenha uma função download_video que baixa o vídeo e retorna o título
-    title = download_video(url, download_path)
+    # Return the video file as a response
+    response = app.response_class(
+        response=content,
+        status=200,
+        mimetype='application/octet-stream'
+    )
+    response.headers.set('Content-Disposition', 'attachment', filename=f'{title}.mp4')
 
-    message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> foi baixado <span class=\'txt_ciano\'>com sucesso!</span>'
-    return jsonify({'message': message})
+    return response
 
 @app.route('/get_thumbnail', methods=['POST'])
 def get_thumbnail():
