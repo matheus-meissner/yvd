@@ -12,8 +12,6 @@ window.onload = function() {
         const data = await response.json();
         const message = document.getElementById('message');
         message.innerHTML = data.message;
-        
-        message.style.opacity = 0;
 
         setTimeout(function() {
             message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
