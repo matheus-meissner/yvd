@@ -1,10 +1,14 @@
 from pytube import YouTube
+import logging
 
-def download_video(url, path): #cria função de download;
-    yt = YouTube(url) #atribuiçao de variáveis: link;
-    ys = yt.streams.get_highest_resolution() #seleciona a maior qualidade disponível;
-    ys.download(path) #faz o download no caminho especificado;
-    return yt.title #retorna o título do vídeo;
+def download_video(url, path):
+    logging.info(f"Starting download for URL: {url}")
+    yt = YouTube(url)
+    ys = yt.streams.get_highest_resolution()
+    ys.download(path)
+    logging.info(f"Download complete for URL: {url}")
+    return yt.title
+
 
 # # Bloco de teste
 # if __name__ == "__main__":
