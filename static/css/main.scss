@@ -3,7 +3,6 @@
 // TODO
 // Transição da mensagem;
 // Transição do container;
-// Tornar fonte mais legível (reduzir weigth);
 
 * {
     margin: 0;
@@ -144,7 +143,8 @@ button {
     font-weight: 50;
     width: 30em;
     color: $bege;
-    transition: 1s;
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
     filter: drop-shadow(-4px 7px 5px $corFundo); //horizontal, vertical, definicao;
 }
 

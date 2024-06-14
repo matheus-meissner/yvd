@@ -129,7 +129,8 @@ button:hover {
   font-weight: 50;
   width: 30em;
   color: #E7D4A7;
-  transition: 1s;
+  transition: opacity 1s ease-in-out;
+  opacity: 0;
   filter: drop-shadow(-4px 7px 5px black);
 }
 

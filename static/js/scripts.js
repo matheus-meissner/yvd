@@ -12,6 +12,12 @@ window.onload = function() {
         const data = await response.json();
         const message = document.getElementById('message');
         message.innerHTML = data.message;
+        
+        message.style.opacity = 0;
+
+        setTimeout(function() {
+            message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
+        }, 10); // Pequeno delay para garantir a transição
     });
 
     document.getElementById('url').addEventListener('input', async function () {
