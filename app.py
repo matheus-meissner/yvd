@@ -18,10 +18,21 @@ def index():
 def download():
     data = request.get_json()
     url = data['url']
-    path = 'downloads/'
-    if not os.path.exists(path):
-        os.makedirs(path)
-    title = download_video(url, path)
+    
+    # Determinar o caminho de downloads padrão do sistema operacional
+    home = os.path.expanduser("~")
+    if os.name == 'nt':  # Windows
+        download_path = os.path.join(home, 'Downloads')
+    else:  # macOS, Linux, etc.
+        download_path = os.path.join(home, 'Downloads')
+
+    # Certificar que o diretório de downloads existe
+    if not os.path.exists(download_path):
+        os.makedirs(download_path)
+    
+    # Supondo que você tenha uma função download_video que baixa o vídeo e retorna o título
+    title = download_video(url, download_path)
+    
     message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> has been downloaded <span class=\'txt_ciano\'>successfully!</span>'
     return jsonify({'message': message})
 
