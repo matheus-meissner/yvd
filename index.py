@@ -1,6 +1,7 @@
 from pytube import YouTube
 import os
 from flask import Flask, render_template, request, jsonify
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -19,18 +20,15 @@ def download():
     data = request.get_json()
     url = data['url']
 
-    # Determinar o caminho de downloads padrão do sistema operacional
     home = os.path.expanduser("~")
     if os.name == 'nt':  # Windows
         download_path = os.path.join(home, 'Downloads')
     else:  # macOS, Linux, etc.
         download_path = os.path.join(home, 'Downloads')
 
-    # Certificar que o diretório de downloads existe
     if not os.path.exists(download_path):
         os.makedirs(download_path)
 
-    # Supondo que você tenha uma função download_video que baixa o vídeo e retorna o título
     title = download_video(url, download_path)
 
     message = f'<span class="txt_vermelho">Vídeo</span><span class="txt_laranja">{title}</span> foi baixado <span class="txt_ciano">com sucesso!</span>'
@@ -50,4 +48,4 @@ def add_header(response):
     return response
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=8000)
+    serve(app, host='0.0.0.0', port=8080)
