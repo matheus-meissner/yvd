@@ -27,7 +27,7 @@ body {
 h1 {
     color: $bege;
     font-size: medium;
-    font-weight: 400;
+    font-weight: 50;
     margin-top: 1em;
     margin-bottom: 4px;
     transition: 1s;
@@ -86,6 +86,7 @@ input {
     font-size: small;
     color: $azulEscuro;
     transition: 1s;
+    font-weight: 50;
 
     &:focus {
         outline: none;
@@ -118,7 +119,7 @@ button {
     background-color: transparent;
     color: $bege;
     font-family: $fontePadrao;
-    font-weight: 400;
+    font-weight: 50;
     font-size: medium;
     cursor: pointer;
     transition: 1s;
@@ -140,6 +141,7 @@ button {
     justify-content: center;
     margin-top: 20px;
     font-size: 1.2em;
+    font-weight: 50;
     width: 30em;
     color: $bege;
     transition: 1s;

@@ -20,7 +20,7 @@ body {
 h1 {
   color: #E7D4A7;
   font-size: medium;
-  font-weight: 400;
+  font-weight: 50;
   margin-top: 1em;
   margin-bottom: 4px;
   transition: 1s;
@@ -75,6 +75,7 @@ input {
   font-size: small;
   color: #091C3F;
   transition: 1s;
+  font-weight: 50;
 }
 input:focus {
   outline: none;
@@ -104,7 +105,7 @@ button {
   background-color: transparent;
   color: #E7D4A7;
   font-family: "Notable", sans-serif;
-  font-weight: 400;
+  font-weight: 50;
   font-size: medium;
   cursor: pointer;
   transition: 1s;
@@ -125,6 +126,7 @@ button:hover {
   justify-content: center;
   margin-top: 20px;
   font-size: 1.2em;
+  font-weight: 50;
   width: 30em;
   color: #E7D4A7;
   transition: 1s;
