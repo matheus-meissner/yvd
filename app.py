@@ -33,7 +33,7 @@ def download():
     # Supondo que você tenha uma função download_video que baixa o vídeo e retorna o título
     title = download_video(url, download_path)
     
-    message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> has been downloaded <span class=\'txt_ciano\'>successfully!</span>'
+    message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> foi baixado <span class=\'txt_ciano\'>com sucesso!</span>'
     return jsonify({'message': message})
 
 @app.route('/get_thumbnail', methods=['POST'])
