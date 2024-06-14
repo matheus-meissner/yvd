@@ -1,6 +1,6 @@
-from flask import Flask, request, jsonify, render_template
 from pytube import YouTube
 import os
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ def index():
 def download():
     data = request.get_json()
     url = data['url']
-    
+
     # Determinar o caminho de downloads padrão do sistema operacional
     home = os.path.expanduser("~")
     if os.name == 'nt':  # Windows
@@ -29,11 +29,11 @@ def download():
     # Certificar que o diretório de downloads existe
     if not os.path.exists(download_path):
         os.makedirs(download_path)
-    
+
     # Supondo que você tenha uma função download_video que baixa o vídeo e retorna o título
     title = download_video(url, download_path)
-    
-    message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> foi baixado <span class=\'txt_ciano\'>com sucesso!</span>'
+
+    message = f'<span class="txt_vermelho">Vídeo</span><span class="txt_laranja">{title}</span> foi baixado <span class="txt_ciano">com sucesso!</span>'
     return jsonify({'message': message})
 
 @app.route('/get_thumbnail', methods=['POST'])
@@ -50,4 +50,4 @@ def add_header(response):
     return response
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0', port=8000)
