@@ -1,15 +1,16 @@
 from pytube import YouTube
-import os
-from flask import Flask, request, jsonify, render_template
+from io import BytesIO
+from flask import Flask, request, jsonify, render_template, send_file
 
 app = Flask(__name__)
 
-def download_video(url, path):
+def download_video(url):
     yt = YouTube(url)
     ys = yt.streams.get_highest_resolution()
-    ys.download(path)
-    return yt.title
-
+    buffer = BytesIO()
+    ys.stream_to_buffer(buffer)
+    buffer.seek(0)
+    return yt.title, buffer
 
 @app.route('/')
 def index():
@@ -19,23 +20,9 @@ def index():
 def download():
     data = request.get_json()
     url = data['url']
-
-    # Determinar o caminho de downloads padrão do sistema operacional
-    home = os.path.expanduser("~")
-    if os.name == 'nt':  # Windows
-        download_path = os.path.join(home, 'Downloads')
-    else:  # macOS, Linux, etc.
-        download_path = os.path.join(home, 'Downloads')
-
-        # Certificar que o diretório de downloads existe
-    if not os.path.exists(download_path):
-        os.makedirs(download_path)
-
-    # Supondo que você tenha uma função download_video que baixa o vídeo e retorna o título
-    title = download_video(url, download_path)
-
-    message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> foi baixado <span class=\'txt_ciano\'>com sucesso!</span>'
-    return jsonify({'message': message})
+    
+    title, buffer = download_video(url)
+    return send_file(buffer, as_attachment=True, download_name=f"{title}.mp4", mimetype='video/mp4')
 
 @app.route('/get_thumbnail', methods=['POST'])
 def get_thumbnail():
@@ -51,4 +38,4 @@ def add_header(response):
     return response
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
