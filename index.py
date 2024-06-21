@@ -1,8 +1,11 @@
 from pytube import YouTube
 from io import BytesIO
 from flask import Flask, request, jsonify, render_template, send_file
+import logging
 
 app = Flask(__name__)
+
+logging.basicConfig(level=logging.DEBUG)
 
 def download_video(url):
     yt = YouTube(url)
@@ -20,9 +23,14 @@ def index():
 def download():
     data = request.get_json()
     url = data['url']
-    
-    title, buffer = download_video(url)
-    return send_file(buffer, as_attachment=True, download_name=f"{title}.mp4", mimetype='video/mp4')
+    app.logger.debug(f"Downloading video from URL: {url}")
+    try:
+        title, buffer = download_video(url)
+        app.logger.debug(f"Downloaded video: {title}")
+        return send_file(buffer, as_attachment=True, download_name=f"{title}.mp4", mimetype='video/mp4')
+    except Exception as e:
+        app.logger.error(f"Error downloading video: {str(e)}")
+        return jsonify({'error': 'Failed to download video'}), 500
 
 @app.route('/get_thumbnail', methods=['POST'])
 def get_thumbnail():
