@@ -22,7 +22,11 @@ def index():
 @app.route('/download', methods=['POST'])
 def download():
     data = request.get_json()
-    url = data['url']
+    app.logger.debug(f"Request JSON data: {data}")
+    url = data.get('url', None)
+    if not url:
+        return jsonify({'error': 'No URL provided'}), 400
+
     app.logger.debug(f"Downloading video from URL: {url}")
     try:
         title, buffer = download_video(url)
@@ -35,7 +39,11 @@ def download():
 @app.route('/get_thumbnail', methods=['POST'])
 def get_thumbnail():
     data = request.get_json()
-    url = data['url']
+    app.logger.debug(f"Request JSON data: {data}")
+    url = data.get('url', None)
+    if not url:
+        return jsonify({'error': 'No URL provided'}), 400
+
     yt = YouTube(url)
     thumbnail_url = yt.thumbnail_url
     return jsonify({'thumbnail_url': thumbnail_url})
@@ -44,6 +52,10 @@ def get_thumbnail():
 def add_header(response):
     response.cache_control.max_age = 0
     return response
+
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204
 
 if __name__ == '__main__':
     app.run(debug=False)
