@@ -10,16 +10,31 @@ window.onload = function() {
                 },
                 body: JSON.stringify({ url: url })
             });
-            const data = await response.json();
-            console.log('Download response:', data); // Log da resposta JSON
-            const message = document.getElementById('message');
-            message.innerHTML = data.message;
 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error);
+            }
+
+            const blob = await response.blob();
+            const downloadUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = downloadUrl;
+            a.download = 'video.mp4';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            const message = document.getElementById('message');
+            message.innerHTML = 'Video downloaded successfully';
             setTimeout(function() {
                 message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
             }, 10); // Pequeno delay para garantir a transição
         } catch (error) {
             console.error('Error fetching download:', error);
+            const message = document.getElementById('message');
+            message.innerHTML = `Error: ${error.message}`;
+            message.style.opacity = 1;
         }
     });
 
@@ -35,8 +50,13 @@ window.onload = function() {
                     },
                     body: JSON.stringify({ url: url })
                 });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error);
+                }
+
                 const data = await response.json();
-                console.log('Thumbnail response:', data); // Log da resposta JSON
                 thumbnail.src = data.thumbnail_url;
                 thumbnail.style.opacity = 0; // Defina a opacidade inicial para 0
                 thumbnail.style.display = 'block';

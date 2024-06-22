@@ -25,13 +25,16 @@ def download():
     app.logger.debug(f"Request JSON data: {data}")
     url = data.get('url', None)
     if not url:
+        app.logger.error('No URL provided')
         return jsonify({'error': 'No URL provided'}), 400
 
     app.logger.debug(f"Downloading video from URL: {url}")
     try:
         title, buffer = download_video(url)
         app.logger.debug(f"Downloaded video: {title}")
-        return send_file(buffer, as_attachment=True, download_name=f"{title}.mp4", mimetype='video/mp4')
+        response = send_file(buffer, as_attachment=True, download_name=f"{title}.mp4", mimetype='video/mp4')
+        app.logger.debug(f"Send file response: {response}")
+        return response
     except Exception as e:
         app.logger.error(f"Error downloading video: {str(e)}")
         return jsonify({'error': 'Failed to download video'}), 500
@@ -42,10 +45,12 @@ def get_thumbnail():
     app.logger.debug(f"Request JSON data: {data}")
     url = data.get('url', None)
     if not url:
+        app.logger.error('No URL provided')
         return jsonify({'error': 'No URL provided'}), 400
 
     yt = YouTube(url)
     thumbnail_url = yt.thumbnail_url
+    app.logger.debug(f"Thumbnail URL: {thumbnail_url}")
     return jsonify({'thumbnail_url': thumbnail_url})
 
 @app.after_request
