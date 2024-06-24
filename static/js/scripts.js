@@ -8,7 +8,7 @@ window.onload = function() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ url: url })
+                body: JSON.stringify({ url: url.trim() }) // Remove espaços extras da URL
             });
 
             if (!response.ok) {
@@ -41,7 +41,7 @@ window.onload = function() {
     });
 
     document.getElementById('url').addEventListener('input', async function () {
-        const url = this.value;
+        const url = this.value.trim(); // Remove espaços extras da URL
         const thumbnail = document.getElementById('thumbnail');
         if (url) {
             try {
