@@ -1,6 +1,6 @@
 from pytube import YouTube
-import os
 from flask import Flask, request, jsonify, render_template
+import os
 
 app = Flask(__name__)
 
@@ -9,7 +9,6 @@ def download_video(url, path):
     ys = yt.streams.get_highest_resolution()
     ys.download(path)
     return yt.title
-
 
 @app.route('/')
 def index():
@@ -20,14 +19,10 @@ def download():
     data = request.get_json()
     url = data['url']
 
-    # Determinar o caminho de downloads padrão do sistema operacional
-    home = os.path.expanduser("~")
-    if os.name == 'nt':  # Windows
-        download_path = os.path.join(home, 'Downloads')
-    else:  # macOS, Linux, etc.
-        download_path = os.path.join(home, 'Downloads')
+    # Use um diretório temporário para downloads
+    download_path = '/tmp/downloads'
 
-        # Certificar que o diretório de downloads existe
+    # Certifique-se de que o diretório de downloads exista
     if not os.path.exists(download_path):
         os.makedirs(download_path)
 
