@@ -8,12 +8,12 @@ app = Flask(__name__)
 def download_video(url):
     yt = YouTube(url)
     ys = yt.streams.get_highest_resolution()
-    
+
     # Baixar o vídeo para um buffer em memória
     buffer = io.BytesIO()
     ys.stream_to_buffer(buffer)
     buffer.seek(0)
-    
+
     return yt.title, buffer
 
 @app.route('/')
