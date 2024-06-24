@@ -13,6 +13,14 @@ window.onload = function() {
         const message = document.getElementById('message');
         message.innerHTML = data.message;
 
+        // Download do vídeo
+        const downloadLink = document.createElement('a');
+        downloadLink.href = data.download_url;
+        downloadLink.download = true;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
         setTimeout(function() {
             message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
         }, 10); // Pequeno delay para garantir a transição
