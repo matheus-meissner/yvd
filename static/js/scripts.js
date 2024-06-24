@@ -3,16 +3,12 @@ window.onload = function() {
         e.preventDefault();
         const url = document.getElementById('url').value.trim();
 
-        if (!isValidURL(url)) {
-            alert("Invalid URL");
+        if (!url) {
+            alert("Please enter a URL.");
             return;
         }
 
         const requestBody = JSON.stringify({ url: url });
-        if (!isJSON(requestBody)) {
-            alert("Invalid JSON format");
-            return;
-        }
 
         try {
             const response = await fetch('/download', {

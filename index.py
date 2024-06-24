@@ -35,7 +35,7 @@ def download():
         return send_file(buffer, as_attachment=True, download_name=f"{title}.mp4", mimetype='video/mp4')
     except Exception as e:
         app.logger.error(f"Error downloading video: {str(e)}")
-        return jsonify({'error': 'Failed to download video'}), 500
+        return jsonify({'error': f'Failed to download video: {str(e)}'}), 500
 
 @app.route('/get_thumbnail', methods=['POST'])
 def get_thumbnail():
