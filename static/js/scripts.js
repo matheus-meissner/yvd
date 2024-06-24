@@ -2,20 +2,49 @@ window.onload = function() {
     document.getElementById('download-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const url = document.getElementById('url').value;
-        const response = await fetch('/download', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ url: url })
-        });
-        const data = await response.json();
-        const message = document.getElementById('message');
-        message.innerHTML = data.message;
 
-        setTimeout(function() {
-            message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
-        }, 10); // Pequeno delay para garantir a transição
+        try {
+            const response = await fetch('/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: url })
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = downloadUrl;
+                // Você pode definir o nome do arquivo como preferir
+                a.download = 'video.mp4';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(downloadUrl);
+                
+                const message = document.getElementById('message');
+                message.innerHTML = 'O vídeo foi baixado com sucesso!';
+                setTimeout(function() {
+                    message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
+                }, 10); // Pequeno delay para garantir a transição
+            } else {
+                const data = await response.json();
+                const message = document.getElementById('message');
+                message.innerHTML = data.message;
+                setTimeout(function() {
+                    message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
+                }, 10); // Pequeno delay para garantir a transição
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            const message = document.getElementById('message');
+            message.innerHTML = 'Ocorreu um erro ao baixar o vídeo.';
+            setTimeout(function() {
+                message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
+            }, 10); // Pequeno delay para garantir a transição
+        }
     });
 
     document.getElementById('url').addEventListener('input', async function () {
