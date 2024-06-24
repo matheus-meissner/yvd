@@ -1,14 +1,26 @@
 window.onload = function() {
     document.getElementById('download-form').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const url = document.getElementById('url').value;
+        const url = document.getElementById('url').value.trim();
+
+        if (!isValidURL(url)) {
+            alert("Invalid URL");
+            return;
+        }
+
+        const requestBody = JSON.stringify({ url: url });
+        if (!isJSON(requestBody)) {
+            alert("Invalid JSON format");
+            return;
+        }
+
         try {
             const response = await fetch('/download', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ url: url.trim() }) // Remove espaços extras da URL
+                body: requestBody
             });
 
             if (!response.ok) {
