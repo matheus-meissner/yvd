@@ -1,19 +1,15 @@
 from pytube import YouTube
-from io import BytesIO
-from flask import Flask, request, jsonify, render_template, send_file
-import logging
+import os
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
-logging.basicConfig(level=logging.DEBUG)
-
-def download_video(url):
+def download_video(url, path):
     yt = YouTube(url)
     ys = yt.streams.get_highest_resolution()
-    buffer = BytesIO()
-    ys.stream_to_buffer(buffer)
-    buffer.seek(0)
-    return yt.title, buffer
+    ys.download(path)
+    return yt.title
+
 
 @app.route('/')
 def index():
@@ -22,33 +18,31 @@ def index():
 @app.route('/download', methods=['POST'])
 def download():
     data = request.get_json()
-    app.logger.debug(f"Request JSON data: {data}")
-    url = data.get('url', None)
-    if not url:
-        app.logger.error('No URL provided')
-        return jsonify({'error': 'No URL provided'}), 400
+    url = data['url']
 
-    app.logger.debug(f"Downloading video from URL: {url}")
-    try:
-        title, buffer = download_video(url)
-        app.logger.debug(f"Downloaded video: {title}")
-        return send_file(buffer, as_attachment=True, download_name=f"{title}.mp4", mimetype='video/mp4')
-    except Exception as e:
-        app.logger.error(f"Error downloading video: {str(e)}")
-        return jsonify({'error': f'Failed to download video: {str(e)}'}), 500
+    # Determinar o caminho de downloads padrão do sistema operacional
+    home = os.path.expanduser("~")
+    if os.name == 'nt':  # Windows
+        download_path = os.path.join(home, 'Downloads')
+    else:  # macOS, Linux, etc.
+        download_path = os.path.join(home, 'Downloads')
+
+        # Certificar que o diretório de downloads existe
+    if not os.path.exists(download_path):
+        os.makedirs(download_path)
+
+    # Supondo que você tenha uma função download_video que baixa o vídeo e retorna o título
+    title = download_video(url, download_path)
+
+    message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> foi baixado <span class=\'txt_ciano\'>com sucesso!</span>'
+    return jsonify({'message': message})
 
 @app.route('/get_thumbnail', methods=['POST'])
 def get_thumbnail():
     data = request.get_json()
-    app.logger.debug(f"Request JSON data: {data}")
-    url = data.get('url', None)
-    if not url:
-        app.logger.error('No URL provided')
-        return jsonify({'error': 'No URL provided'}), 400
-
+    url = data['url']
     yt = YouTube(url)
     thumbnail_url = yt.thumbnail_url
-    app.logger.debug(f"Thumbnail URL: {thumbnail_url}")
     return jsonify({'thumbnail_url': thumbnail_url})
 
 @app.after_request
@@ -56,9 +50,5 @@ def add_header(response):
     response.cache_control.max_age = 0
     return response
 
-@app.route('/favicon.ico')
-def favicon():
-    return '', 204
-
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
