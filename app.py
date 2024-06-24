@@ -1,3 +1,9 @@
+from pytube import YouTube
+from flask import Flask, request, jsonify, render_template
+import os
+
+app = Flask(__name__)
+
 def download_video(url, path):
     yt = YouTube(url)
     ys = yt.streams.get_highest_resolution()
