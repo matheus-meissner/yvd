@@ -15,8 +15,8 @@ window.onload = function() {
 
         // Download do vídeo
         const downloadLink = document.createElement('a');
-        downloadLink.href = `/download_file?url=${encodeURIComponent(url)}`;
-        downloadLink.download = `${data.title}.mp4`;
+        downloadLink.href = data.download_url;
+        downloadLink.download = true;
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
@@ -38,7 +38,6 @@ window.onload = function() {
                 body: JSON.stringify({ url: url })
             });
             const data = await response.json();
-            const thumbnail = document.getElementById('thumbnail');
             thumbnail.src = data.thumbnail_url;
             thumbnail.style.opacity = 0; // Defina a opacidade inicial para 0
             thumbnail.style.display = 'block';
@@ -53,7 +52,7 @@ window.onload = function() {
                 thumbnail.style.display = 'none'; // Ocultar a thumbnail após a transição de opacidade
             }, 1000); // Aguarde a duração da transição antes de ocultar
         }
-    });        
+    });
 
     document.getElementById('thumbnail').addEventListener('click', function () {
         const videoUrl = this.getAttribute('data-url');

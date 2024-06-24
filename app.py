@@ -1,20 +1,13 @@
-import io
 from pytube import YouTube
-from flask import Flask, request, jsonify, render_template, send_file
+from flask import Flask, request, jsonify, render_template
 import os
 
 app = Flask(__name__)
 
-def download_video(url):
+def get_video_download_url(url):
     yt = YouTube(url)
     ys = yt.streams.get_highest_resolution()
-
-    # Baixar o vídeo para um buffer em memória
-    buffer = io.BytesIO()
-    ys.stream_to_buffer(buffer)
-    buffer.seek(0)
-
-    return yt.title, buffer
+    return yt.title, ys.url
 
 @app.route('/')
 def index():
@@ -25,18 +18,11 @@ def download():
     data = request.get_json()
     url = data['url']
 
-    # Baixar o vídeo para um buffer em memória
-    title, video_buffer = download_video(url)
+    # Supondo que você tenha uma função get_video_download_url que retorna o título e URL de download
+    title, download_url = get_video_download_url(url)
 
-    # Construir a URL de download
     message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> foi baixado <span class=\'txt_ciano\'>com sucesso!</span>'
-    return jsonify({'message': message, 'title': title})
-
-@app.route('/download_file', methods=['GET'])
-def download_file():
-    url = request.args.get('url')
-    title, video_buffer = download_video(url)
-    return send_file(video_buffer, as_attachment=True, download_name=f"{title}.mp4")
+    return jsonify({'message': message, 'download_url': download_url})
 
 @app.route('/get_thumbnail', methods=['POST'])
 def get_thumbnail():
