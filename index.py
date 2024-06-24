@@ -32,9 +32,7 @@ def download():
     try:
         title, buffer = download_video(url)
         app.logger.debug(f"Downloaded video: {title}")
-        response = send_file(buffer, as_attachment=True, download_name=f"{title}.mp4", mimetype='video/mp4')
-        app.logger.debug(f"Send file response: {response}")
-        return response
+        return send_file(buffer, as_attachment=True, download_name=f"{title}.mp4", mimetype='video/mp4')
     except Exception as e:
         app.logger.error(f"Error downloading video: {str(e)}")
         return jsonify({'error': 'Failed to download video'}), 500
