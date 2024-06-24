@@ -2,28 +2,39 @@ window.onload = function() {
     document.getElementById('download-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const url = document.getElementById('url').value;
-        const response = await fetch('/download', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ url: url })
-        });
-        const data = await response.json();
-        const message = document.getElementById('message');
-        message.innerHTML = data.message;
+        try {
+            const response = await fetch('/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: url })
+            });
 
-        // Download do vídeo
-        const downloadLink = document.createElement('a');
-        downloadLink.href = data.download_url;
-        downloadLink.download = true;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
 
-        setTimeout(function() {
-            message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
-        }, 10); // Pequeno delay para garantir a transição
+            const data = await response.json();
+            const message = document.getElementById('message');
+            message.innerHTML = data.message;
+
+            // Download do vídeo
+            const downloadLink = document.createElement('a');
+            downloadLink.href = data.download_url;
+            downloadLink.download = true;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+            setTimeout(function() {
+                message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
+            }, 10); // Pequeno delay para garantir a transição
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            const message = document.getElementById('message');
+            message.innerHTML = 'Ocorreu um erro ao tentar baixar o vídeo. Por favor, tente novamente.';
+        }
     });
 
     document.getElementById('url').addEventListener('input', async function () {
