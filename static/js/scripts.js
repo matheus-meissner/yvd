@@ -15,8 +15,8 @@ window.onload = function() {
 
         // Download do vídeo
         const downloadLink = document.createElement('a');
-        downloadLink.href = data.download_url;
-        downloadLink.download = true;
+        downloadLink.href = `/download_file?url=${encodeURIComponent(url)}`;
+        downloadLink.download = `${data.title}.mp4`;
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);

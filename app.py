@@ -1,14 +1,20 @@
+import io
 from pytube import YouTube
-from flask import Flask, request, jsonify, render_template, send_from_directory
+from flask import Flask, request, jsonify, render_template, send_file
 import os
 
 app = Flask(__name__)
 
-def download_video(url, path):
+def download_video(url):
     yt = YouTube(url)
     ys = yt.streams.get_highest_resolution()
-    download_path = ys.download(path)
-    return yt.title, download_path
+    
+    # Baixar o vídeo para um buffer em memória
+    buffer = io.BytesIO()
+    ys.stream_to_buffer(buffer)
+    buffer.seek(0)
+    
+    return yt.title, buffer
 
 @app.route('/')
 def index():
@@ -19,29 +25,18 @@ def download():
     data = request.get_json()
     url = data['url']
 
-    # Use um diretório temporário para downloads
-    download_path = 'downloads'
-
-    # Certifique-se de que o diretório de downloads exista
-    if not os.path.exists(download_path):
-        os.makedirs(download_path)
-
-    # Supondo que você tenha uma função download_video que baixa o vídeo e retorna o título e caminho
-    title, full_download_path = download_video(url, download_path)
-
-    # Obtenha o nome do arquivo a partir do caminho completo
-    filename = os.path.basename(full_download_path)
+    # Baixar o vídeo para um buffer em memória
+    title, video_buffer = download_video(url)
 
     # Construir a URL de download
-    download_url = request.host_url + 'download_file/' + filename
-
     message = f'<span class=\'txt_vermelho\'>Video</span><span class=\'txt_laranja\'>"{title}"</span> foi baixado <span class=\'txt_ciano\'>com sucesso!</span>'
-    return jsonify({'message': message, 'download_url': download_url})
+    return jsonify({'message': message, 'title': title})
 
-@app.route('/download_file/<filename>', methods=['GET'])
-def download_file(filename):
-    download_path = 'downloads'
-    return send_from_directory(download_path, filename, as_attachment=True)
+@app.route('/download_file', methods=['GET'])
+def download_file():
+    url = request.args.get('url')
+    title, video_buffer = download_video(url)
+    return send_file(video_buffer, as_attachment=True, download_name=f"{title}.mp4")
 
 @app.route('/get_thumbnail', methods=['POST'])
 def get_thumbnail():
