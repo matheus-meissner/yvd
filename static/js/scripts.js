@@ -13,10 +13,12 @@ window.onload = function() {
 
             if (!response.ok) {
                 const errorData = await response.json();
+                console.error('Error response:', errorData);
                 throw new Error(errorData.error);
             }
 
             const blob = await response.blob();
+            console.log('Download blob:', blob);
             const downloadUrl = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = downloadUrl;
@@ -53,10 +55,12 @@ window.onload = function() {
 
                 if (!response.ok) {
                     const errorData = await response.json();
+                    console.error('Error response:', errorData);
                     throw new Error(errorData.error);
                 }
 
                 const data = await response.json();
+                console.log('Thumbnail response:', data);
                 thumbnail.src = data.thumbnail_url;
                 thumbnail.style.opacity = 0; // Defina a opacidade inicial para 0
                 thumbnail.style.display = 'block';
