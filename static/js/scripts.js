@@ -6,32 +6,38 @@ window.onload = function() {
         const url = document.getElementById('url').value;
 
         try {
-            const response = await fetch(`${backendUrl}/download`, {  // Usando backendUrl para obter a URL do vídeo
+            const response = await fetch(`${backendUrl}/download`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ url: url })
             });
+
             const data = await response.json();
-            console.log(data);
+            console.log(data); // Log para depuração
             const message = document.getElementById('message');
+            message.innerHTML = ""; // Limpa mensagens anteriores
 
             // Verifica se o download_url foi retornado corretamente
             if (data.download_url) {
-                message.innerHTML = data.message;
+                message.innerHTML = data.message || "O vídeo está pronto para download.";
 
-                // Link de download direto no navegador
+                // Cria um link de download direto
                 const downloadLink = document.createElement('a');
                 downloadLink.href = data.download_url;
-                downloadLink.target = "_blank"; // Abre em uma nova aba
-                downloadLink.download = "video.mp4"; // Permite o download direto no navegador
+                downloadLink.target = "_blank"; // Abre em uma nova aba para garantir o acesso
+                downloadLink.download = "video.mp4"; // Nome do arquivo para download
                 downloadLink.textContent = "Clique aqui para baixar o vídeo";
+                
+                // Adiciona o link de download ao elemento de mensagem
                 message.appendChild(downloadLink);
+
             } else {
                 message.innerHTML = "Erro ao obter o link de download. Tente novamente.";
             }
 
+            // Define opacidade para 1 para exibir a mensagem com transição
             setTimeout(function() {
                 message.style.opacity = 1;
             }, 10);
@@ -46,7 +52,7 @@ window.onload = function() {
         const url = this.value;
         const thumbnail = document.getElementById('thumbnail');
         if (url) {
-            const response = await fetch(`${backendUrl}/get_thumbnail`, {  // Usando backendUrl para obter a thumbnail
+            const response = await fetch(`${backendUrl}/get_thumbnail`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
