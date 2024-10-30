@@ -14,6 +14,7 @@ window.onload = function() {
                 body: JSON.stringify({ url: url })
             });
             const data = await response.json();
+            console.log(data);
             const message = document.getElementById('message');
 
             // Verifica se o download_url foi retornado corretamente
@@ -24,7 +25,7 @@ window.onload = function() {
                 const downloadLink = document.createElement('a');
                 downloadLink.href = data.download_url;
                 downloadLink.target = "_blank"; // Abre em uma nova aba
-                downloadLink.download = ""; // Permite o download direto no navegador
+                downloadLink.download = "video.mp4"; // Permite o download direto no navegador
                 downloadLink.textContent = "Clique aqui para baixar o vídeo";
                 message.appendChild(downloadLink);
             } else {

@@ -9,6 +9,7 @@ CORS(app, origins=["https://yvd.vercel.app"])  # Adicione o CORS ao seu app Flas
 def download_video(url, path):
     yt = YouTube(url)
     ys = yt.streams.get_highest_resolution().url
+    print(ys)
     video_path = ys.download(path)
     return yt.title, video_path
 
