@@ -15,15 +15,21 @@ window.onload = function() {
             });
             const data = await response.json();
             const message = document.getElementById('message');
-            message.innerHTML = data.message;
 
-            // Link de download direto no navegador
-            const downloadLink = document.createElement('a');
-            downloadLink.href = data.download_url;
-            downloadLink.target = "_blank"; // Abre em uma nova aba
-            downloadLink.download = ""; // Permite o download direto no navegador
-            downloadLink.textContent = "Clique aqui para baixar o vídeo";
-            message.appendChild(downloadLink);
+            // Verifica se o download_url foi retornado corretamente
+            if (data.download_url) {
+                message.innerHTML = data.message;
+
+                // Link de download direto no navegador
+                const downloadLink = document.createElement('a');
+                downloadLink.href = data.download_url;
+                downloadLink.target = "_blank"; // Abre em uma nova aba
+                downloadLink.download = ""; // Permite o download direto no navegador
+                downloadLink.textContent = "Clique aqui para baixar o vídeo";
+                message.appendChild(downloadLink);
+            } else {
+                message.innerHTML = "Erro ao obter o link de download. Tente novamente.";
+            }
 
             setTimeout(function() {
                 message.style.opacity = 1;
