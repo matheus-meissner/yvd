@@ -1,8 +1,10 @@
+const backendUrl = "https://ytvideodownloader-production.up.railway.app";
+
 window.onload = function() {
     document.getElementById('download-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const url = document.getElementById('url').value;
-        const response = await fetch('/download', {
+        const response = await fetch(`${backendUrl}/download`, {  // Alterado para usar backendUrl
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,7 +32,7 @@ window.onload = function() {
         const url = this.value;
         const thumbnail = document.getElementById('thumbnail');
         if (url) {
-            const response = await fetch('/get_thumbnail', {
+            const response = await fetch(`${backendUrl}/get_thumbnail`, {  // Alterado para usar backendUrl
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -96,4 +98,4 @@ window.onload = function() {
             }
         }, 1000); // Tempo de espera para a transição completar antes de esconder a tooltip
     });
-}
+};
