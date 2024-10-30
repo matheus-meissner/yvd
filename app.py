@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify, render_template, send_file, after_this_request
+from flask_cors import CORS  # Importe o CORS
 import os
 from pytube import YouTube
 
 app = Flask(__name__)
+CORS(app, origins=["https://yvd.vercel.app"])  # Adicione o CORS ao seu app Flask
 
 def download_video(url, path):
     yt = YouTube(url)
