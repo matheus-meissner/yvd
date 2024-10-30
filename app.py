@@ -7,10 +7,15 @@ app = Flask(__name__)
 CORS(app, origins=["https://yvd.vercel.app"])  # Habilitar CORS para o front-end na Vercel
 
 def get_video_url(url):
-    yt = YouTube(url)
-    video_url = yt.streams.get_highest_resolution().url  # Pegue a URL direta do stream
-    print("Video URL:", video_url)  # Log para verificar a URL
-    return yt.title, video_url
+    try:
+        yt = YouTube(url)
+        video_url = yt.streams.get_highest_resolution().url
+        print("Video URL:", video_url)  # Log para verificar a URL
+        return yt.title, video_url
+    except Exception as e:
+        print(f"Erro ao obter o URL do vídeo: {e}")
+        raise ValueError("Erro ao acessar o vídeo. Verifique se o link é válido.")
+
 
 @app.route('/')
 def index():
