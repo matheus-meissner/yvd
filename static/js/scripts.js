@@ -4,35 +4,42 @@ window.onload = function() {
     document.getElementById('download-form').addEventListener('submit', async function (e) {
         e.preventDefault();
         const url = document.getElementById('url').value;
-        const response = await fetch(`${backendUrl}/download`, {  // Alterado para usar backendUrl
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ url: url })
-        });
-        const data = await response.json();
-        const message = document.getElementById('message');
-        message.innerHTML = data.message;
 
-        // Download do vídeo
-        const downloadLink = document.createElement('a');
-        downloadLink.href = data.download_url;
-        downloadLink.download = true;
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
+        try {
+            const response = await fetch(`${backendUrl}/download`, {  // Usando backendUrl para obter a URL do vídeo
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: url })
+            });
+            const data = await response.json();
+            const message = document.getElementById('message');
+            message.innerHTML = data.message;
 
-        setTimeout(function() {
-            message.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
-        }, 10); // Pequeno delay para garantir a transição
+            // Link de download direto no navegador
+            const downloadLink = document.createElement('a');
+            downloadLink.href = data.download_url;
+            downloadLink.target = "_blank"; // Abre em uma nova aba
+            downloadLink.download = ""; // Permite o download direto no navegador
+            downloadLink.textContent = "Clique aqui para baixar o vídeo";
+            message.appendChild(downloadLink);
+
+            setTimeout(function() {
+                message.style.opacity = 1;
+            }, 10);
+
+        } catch (error) {
+            console.error("Erro ao tentar baixar:", error);
+            document.getElementById('message').textContent = "Erro ao tentar baixar o vídeo.";
+        }
     });
 
     document.getElementById('url').addEventListener('input', async function () {
         const url = this.value;
         const thumbnail = document.getElementById('thumbnail');
         if (url) {
-            const response = await fetch(`${backendUrl}/get_thumbnail`, {  // Alterado para usar backendUrl
+            const response = await fetch(`${backendUrl}/get_thumbnail`, {  // Usando backendUrl para obter a thumbnail
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -41,18 +48,18 @@ window.onload = function() {
             });
             const data = await response.json();
             thumbnail.src = data.thumbnail_url;
-            thumbnail.style.opacity = 0; // Defina a opacidade inicial para 0
+            thumbnail.style.opacity = 0;
             thumbnail.style.display = 'block';
-            thumbnail.setAttribute('data-url', url); // Defina o atributo data-url com a URL do vídeo
-            thumbnail.style.transition = 'opacity 1s, box-shadow 1s'; // Adicione a transição de opacidade e box-shadow
+            thumbnail.setAttribute('data-url', url);
+            thumbnail.style.transition = 'opacity 1s, box-shadow 1s';
             setTimeout(function() {
-                thumbnail.style.opacity = 1; // Defina a opacidade para 1 para iniciar a transição
-            }, 100); // Pequeno delay para garantir a transição
+                thumbnail.style.opacity = 1;
+            }, 100);
         } else {
-            thumbnail.style.opacity = 0; // Defina a opacidade para 0 para iniciar o fade out
+            thumbnail.style.opacity = 0;
             setTimeout(function() {
-                thumbnail.style.display = 'none'; // Ocultar a thumbnail após a transição de opacidade
-            }, 1000); // Aguarde a duração da transição antes de ocultar
+                thumbnail.style.display = 'none';
+            }, 1000);
         }
     });
 
@@ -80,7 +87,7 @@ window.onload = function() {
             if (tooltipVisible) {
                 tooltip.style.opacity = 1;
             }
-        }, 10); // Pequeno delay para garantir a transição
+        }, 10);
     });
 
     thumbnail.addEventListener('mousemove', function (e) {
@@ -96,6 +103,6 @@ window.onload = function() {
             if (!tooltipVisible) {
                 tooltip.style.display = 'none';
             }
-        }, 1000); // Tempo de espera para a transição completar antes de esconder a tooltip
+        }, 1000);
     });
 };
